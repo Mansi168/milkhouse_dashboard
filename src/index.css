@@ -20,9 +20,9 @@
 }
 
 .logo{
-  height: 32px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px;
+  height: 38px;
+  background: #ffd333;
+  margin: 0;
 }
 
 .ant-layout-sider{
@@ -31,4 +31,17 @@
   height: 100vh;
   position: fixed;
   left: 0;
+}
+.sm-logo{
+  display: none;
+}
+.ant-layout-sider-collapsed .sm-logo{
+  display: block;
+}
+.ant-layout-sider-collapsed .lg-logo{
+  display: none;
+}
+
+main{
+  overflow-y: scroll;
 }
