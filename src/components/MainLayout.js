@@ -6,12 +6,22 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
+import {
+  AiOutlineDashboard,
+  AiOutlineShoppingCart,
+  AiOutlineUser,
+  AiOutlineBgColors,
+} from "react-icons/ai";
 import { Layout, Menu, Button, theme } from 'antd';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { RxDashboard } from "react-icons/rx";
+import Dashboard from '../pages/Dashboard';
+import { IoIosNotifications } from "react-icons/io";
 import { TbMilk } from "react-icons/tb";
 import { GiCow } from "react-icons/gi";
 import { CgProfile } from "react-icons/cg";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link, Outlet } from 'react-router-dom';
 import { GiCash } from "react-icons/gi";
 const { Header, Sider, Content } = Layout;
 
@@ -57,31 +67,105 @@ const MainLayout = () => {
               label: 'My Profile',
             },
             {
+              key: 'customers',
+              icon: <AiOutlineUser/>,
+              label: 'Customers',
+            },
+            {
               key: 'cattle',
               icon: <GiCow />,
               label: 'Cattle',
             },
             {
-              key: 'products',
-              icon: <TbMilk />,
-              label: 'Products',
+              key: "Catalog",
+              icon: <TbMilk className="fs-4" />,
+              label: "Product Catalog",
+              children: [
+            {
+              key: "product",
+                  icon: <AiOutlineShoppingCart className="fs-4" />,
+                  label: "Add Product",
             },
             {
-              key: 'revenue',
+              key: "list-product",
+              icon: <AiOutlineShoppingCart className="fs-4" />,
+              label: "Product List",
+            },
+          ],
+        },
+            {
+              key: 'orders',
               icon: <GiCash />,
-              label: 'Revenue',
+              label: 'Orders',
             },
           ]}
         />
       </Sider>
-      <Layout>
-        <Header
+      <Layout className="site-layout">
+      <Header
+          className="d-flex justify-content-between ps-1 pe-5"
           style={{
             padding: 0,
             background: colorBgContainer,
           }}
         >
-          <Button
+          {React.createElement(
+            collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
+            {
+              className: "trigger",
+              onClick: () => setCollapsed(!collapsed),
+            }
+          )}
+          <div className="d-flex gap-4 align-items-center">
+            {/* <div className="position-relative">
+              <IoIosNotifications className="fs-4" />
+              <span className="badge bg-warning rounded-circle p-1 position-absolute">
+                3
+              </span>
+            </div> */}
+
+            <div className="d-flex gap-3 align-items-center dropdown">
+              <div>
+                <img
+                  width={32}
+                  height={32}
+                  src="https://stroyka-admin.html.themeforest.scompiler.ru/variants/ltr/images/customers/customer-4-64x64.jpg"
+                  alt=""
+                />
+              </div>
+              <div
+                role="button"
+                id="dropdownMenuLink"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <h5 className="mb-0">Navdeep</h5>
+                <p className="mb-0">navdeepdahiya753@gmail.com</p>
+              </div>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li>
+                  <Link
+                    className="dropdown-item py-1 mb-1"
+                    style={{ height: "auto", lineHeight: "20px" }}
+                    to="/"
+                  >
+                    View Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="dropdown-item py-1 mb-1"
+                    style={{ height: "auto", lineHeight: "20px" }}
+                    to="/"
+                  >
+                    Signout
+                  </Link>
+                </li>
+              </div>
+            </div>
+          </div>
+        </Header>
+          {/* <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
@@ -90,8 +174,8 @@ const MainLayout = () => {
               width: 64,
               height: 64,
             }}
-          />
-        </Header>
+          /> */}
+       
         <Content
           style={{
             margin: '24px 16px',
@@ -101,9 +185,22 @@ const MainLayout = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          Content
+         <ToastContainer
+            position="top-right"
+            autoClose={250}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            theme="light"
+          />
+           <Dashboard/>
+          <Outlet />
         </Content>
       </Layout>
+      {/* <Dashboard/> */}
     </Layout>
   );
 };
